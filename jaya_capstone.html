@@ -1,0 +1,120 @@
+<!-- inventory management system -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        let product = []
+        function addProduct(id, name, quantity, price) {
+            if (!id || !name || !quantity || !price) {
+                alert("Product not found")
+            }
+            let exist = product.some(i => i.id == id)
+            if (exist) {
+                alert("Record is already exists!!!")
+            }
+            let newProduct = { id, name, quantity, price }
+            product.push(newProduct)
+            alert("Record inserted successfully!!!")
+        }
+
+        function updateProduct(uid, uname, uquantity, uprice) {
+            let updateID = product.find(i => i.id== uid)
+            if (!updateID) {
+                alert("Product not found")
+            } else {
+                product.map(i => {
+                    if (i.id == uid) {
+                        i.name = uname
+                        i.quantity = uquantity
+                        i.price = uprice
+                    }
+                })
+                alert("Record updated successfully!!!")
+            }
+        }
+        function deleteProduct(deletedId) {
+            let deleteID = product.findIndex(i => i.id == deletedId)
+            if (deleteID == -1) {
+                alert("Product not found")
+            } else {
+                product.splice(deleteID, 1)
+                alert("Record deleted successfully!!!")
+            }
+        }
+
+        function searchProduct(sname) {
+            let pro = product.find(i => i.name == sname)
+            if (!pro) {
+                alert("Product Not Found")
+            } else {
+                alert(`Product found \n ID:${pro.id}\n Name:${pro.name}\n Quantity:${pro.quantity}\n Price:${pro.price}`)
+            }
+        }
+
+        function viewProducts() {
+            if (!product) {
+                alert("Product Not Found")
+            } else {
+                let show = "Products Lists:\n"
+                product.map(i => show += `ID:${i.id}\n Name:${i.name} \nQuantity:${i.quantity}\n Price:${i.price} \n`)
+                alert(show)
+            }
+        }
+
+        function totalValue() {
+            let total = 0;
+            product.map(i => total += (i.quantity * i.price))
+            alert(`Total inventory value is: ${total}`)
+        }
+
+        while (true) {
+            let choice = prompt("1.Add Product\n 2.Update Product\n 3.Delete Product\n 4.Search Product\n 5.View all products\n 6.Total inventory value\n 7.Exit \n  Enter your choice(1-7):");
+            if (choice === null) break;
+            switch (choice) {
+                case "1":
+                    let id = parseInt(prompt("Enter product ID: "))
+                    let name = prompt("Enter Product Name: ")
+                    let quantity = parseInt(prompt("Enter product Quantity: "))
+                    let price = parseInt(prompt("Enter product price: "))
+                    addProduct(id, name, quantity, price)
+                    break;
+
+                case "2":
+                    let uid = parseInt(prompt("Enter product ID: "))
+                    let uname = prompt("Enter update to Product Name: ")
+                    let uquantity = parseInt(prompt("Enter update to product Quantity: "))
+                    let uprice = parseInt(prompt("Enter product price: "))
+                    updateProduct(uid, uname, uquantity, uprice)
+                    break;
+                case "3":
+                    let deletedId = prompt("Enter id to delete product: ")
+                    deleteProduct(deletedId)
+                    break;
+                case "4":
+                    let sname = prompt("Enter search by product name: ")
+                    searchProduct(sname)
+                    break;
+                case "5":
+                    viewProducts()
+                    break;
+                case "6":
+                    totalValue()
+                    break;
+                case "7":
+                    alert("EXIT!!")
+                    break;
+                default:
+                    alert("Invalid choice!! Please try again..")
+            }
+        }
+    </script>
+</body>
+
+</html>
